@@ -15,6 +15,11 @@ public class HttpDemoApplication {
 		SpringApplication.run(HttpDemoApplication.class, args);
 	}
 
+
+
+
+
+
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
