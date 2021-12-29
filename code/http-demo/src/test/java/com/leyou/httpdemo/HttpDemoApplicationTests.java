@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = HttpDemoApplication.class)
+@SpringBootTest(classes = HttpDemoApplication.class)//指定引导类
 public class HttpDemoApplicationTests {
 
 	@Autowired
@@ -17,7 +17,7 @@ public class HttpDemoApplicationTests {
 
 	@Test
 	public void httpGet() {
-		User user = this.restTemplate.getForObject("http://localhost/hello", User.class);
+		User user = this.restTemplate.getForObject("http://localhost:8081/category/list", User.class);
 		System.out.println(user);
 	}
 

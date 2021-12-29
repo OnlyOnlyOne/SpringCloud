@@ -1,5 +1,7 @@
 package com.leyou.httpdemo;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.leyou.httpdemo.pojo.User;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
@@ -13,6 +15,8 @@ import java.io.IOException;
 public class HttpTests {
 
     CloseableHttpClient httpClient;
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Before
     public void init() {
@@ -28,7 +32,7 @@ public class HttpTests {
 
     @Test
     public void testPost() throws IOException {
-        HttpPost request = new HttpPost("http://www.oschina.net/");
+        HttpPost request = new HttpPost("https://www.oschina.net/");
         request.setHeader("User-Agent",
                 "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
         String response = this.httpClient.execute(request, new BasicResponseHandler());
@@ -37,8 +41,12 @@ public class HttpTests {
 
     @Test
     public void testGetPojo() throws IOException {
-        HttpGet request = new HttpGet("http://localhost/hello");
+        HttpGet request = new HttpGet("http://localhost:8081/category/list");
         String response = this.httpClient.execute(request, new BasicResponseHandler());
         System.out.println(response);
+
+
+
+
     }
 }
