@@ -1,7 +1,6 @@
 package com.leyou.httpdemo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.leyou.httpdemo.pojo.User;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
