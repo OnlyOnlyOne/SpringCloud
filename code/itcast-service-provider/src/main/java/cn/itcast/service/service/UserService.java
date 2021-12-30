@@ -1,19 +1,20 @@
 package cn.itcast.service.service;
 
 
-import cn.itcast.service.mapper.UserMapper;
-import cn.itcast.service.pojo.User;
+import cn.itcast.service.mapper.TbUserMapper;
+import cn.itcast.service.pojo.TbUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+
 @Service
 public class UserService {
+    @Resource
+    public TbUserMapper tbUserMapper;
 
-    @Autowired
-    public UserMapper userMapper;
 
-
-    public User queryUserById(Long id) {
-        return this.userMapper.selectByPrimaryKey(id);
+    public TbUser queryUserById(Long id) {
+        return tbUserMapper.selectUserById(id);
     }
 }

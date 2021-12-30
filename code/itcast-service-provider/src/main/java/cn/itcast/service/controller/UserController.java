@@ -1,23 +1,29 @@
 package cn.itcast.service.controller;
 
-import cn.itcast.service.pojo.User;
+import cn.itcast.service.pojo.TbUser;
 import cn.itcast.service.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 public class UserController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
-    @GetMapping("{id}")
-    public User queryUserById(@PathVariable("id") Long id) {
-        User user = userService.queryUserById(id);
+    @GetMapping("/getuser/{id}")
+    public TbUser queryUserById(@PathVariable("id") Long id) {
+        TbUser user = userService.queryUserById(id);
+        return user;
+    }
+
+    @PostMapping("/getuser")
+    public TbUser queryUser(@RequestParam() Long id) {
+        TbUser user = userService.queryUserById(id);
         return user;
     }
 }

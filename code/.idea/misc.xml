@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/http-demo/pom.xml" />
         <option value="$PROJECT_DIR$/itcast-service-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/itcast-service-consumer/pom.xml" />
       </list>
     </option>
   </component>
