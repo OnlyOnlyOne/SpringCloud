@@ -4,6 +4,13 @@ import cn.itcast.service.pojo.TbUser;
 import cn.itcast.service.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+
+
+
+
+
+
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,5 +32,9 @@ public class UserController {
     public TbUser queryUser(@RequestParam() Long id) {
         TbUser user = userService.queryUserById(id);
         return user;
+
+
+
+
     }
 }
