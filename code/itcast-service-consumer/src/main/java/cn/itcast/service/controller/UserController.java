@@ -23,8 +23,8 @@ public class UserController {
 
 
 
-    @Autowired
-    private DiscoveryClient discoveryClient; //包含了拉取的所有服务信息
+//    @Autowired
+//    private DiscoveryClient discoveryClient; //包含了拉取的所有服务信息
 
 
 
@@ -32,10 +32,10 @@ public class UserController {
     @GetMapping("/user")
     @ResponseBody
     public TbUser queryUserById(@RequestParam("id") Long id) {
-        List<ServiceInstance> instances = discoveryClient.getInstances("service-provider");
-        ServiceInstance serviceInstance = instances.get(0);
+//        List<ServiceInstance> instances = discoveryClient.getInstances("service-provider");
+//        ServiceInstance serviceInstance = instances.get(0);
         TbUser user = this.restTemplate.getForObject(
-                "http://" + serviceInstance.getHost() + ":" + serviceInstance.getPort() + "/user/getuser/" + id, TbUser.class);
+                "http://service-provider/user/getuser/" + id, TbUser.class);
         /*反序列回TbUser.class*/
         return user;
     }
