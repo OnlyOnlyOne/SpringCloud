@@ -2,6 +2,8 @@ package cn.itcast.service.controller;
 
 
 import cn.itcast.service.pojo.TbUser;
+import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -17,6 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/consumer")
+@DefaultProperties(defaultFallback = "fallbackMethod") //定义全局的熔断方法
 public class UserController {
     @Autowired
     private RestTemplate restTemplate;
@@ -31,12 +34,19 @@ public class UserController {
 
     @GetMapping("/user")
     @ResponseBody
-    public TbUser queryUserById(@RequestParam("id") Long id) {
+    @HystrixCommand
+    public String queryUserById(@RequestParam("id") Long id) {
 //        List<ServiceInstance> instances = discoveryClient.getInstances("service-provider");
 //        ServiceInstance serviceInstance = instances.get(0);
-        TbUser user = this.restTemplate.getForObject(
-                "http://service-provider/user/getuser/" + id, TbUser.class);
+        return this.restTemplate.getForObject(
+                "http://service-provider/user/getuser/" + id, String.class);
         /*反序列回TbUser.class*/
-        return user;
+
+    }
+
+    //定义一个熔断方法
+    public String fallbackMethod() {
+        TbUser tbUser = new TbUser();
+        return "服务器正忙，请稍后再试";
     }
 }
