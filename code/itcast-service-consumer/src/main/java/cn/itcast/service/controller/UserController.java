@@ -36,7 +36,7 @@ public class UserController {
 
     @GetMapping("/user")
     @ResponseBody
-    @HystrixCommand
+//    @HystrixCommand
     public String queryUserById(@RequestParam("id") Long id) {
 //        List<ServiceInstance> instances = discoveryClient.getInstances("service-provider");
 //        ServiceInstance serviceInstance = instances.get(0);
