@@ -5,9 +5,11 @@ spring:
     name: itcast-zuul
 zuul:
   routes:
+#    service-provider: /service-provider/**
     service-provider: /service-provider/**
-    service-consumer: /consumer/**
-  prefix: /api
+    serviceId: service-provider
+#    service-consumer: /consumer/**
+#  prefix: /api
 
 
 eureka:
