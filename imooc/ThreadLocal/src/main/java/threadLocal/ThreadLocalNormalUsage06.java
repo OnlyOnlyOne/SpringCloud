@@ -32,6 +32,9 @@ class Service2 {
 
 class Service3 {
 
+
+
+
     public void process() {
         User user = UserContextHolder.holder.get();
         System.out.println("Service3拿到用户名：" + user.name);
@@ -42,8 +45,6 @@ class Service3 {
 class UserContextHolder {
 
     public static ThreadLocal<User> holder = new ThreadLocal<>();
-
-
 }
 
 class User {
