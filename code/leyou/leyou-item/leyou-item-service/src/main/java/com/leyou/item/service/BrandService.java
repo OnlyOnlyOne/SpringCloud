@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
@@ -53,6 +54,18 @@ public class BrandService {
         //包装成结果集返回
         return new PageResult<>(pageInfo.getTotal(), pageInfo.getList());
 
+
+    }
+
+    @Transactional
+    public void saveBrand(Brand brand, List<Long> cids) {
+        //先新增brand
+        this.brandMapper.insertSelective(brand) ;
+        //再新增中间表
+
+            cids.forEach(cid -> {
+                this.brandMapper.insertCategoryAndBrand(cid, brand.getId());
+            });
 
     }
 }
