@@ -68,4 +68,12 @@ public class BrandService {
             });
 
     }
+
+    public List<Brand> queryBrandsByCid(Long cid) {
+        //多表关联
+//        Brand brand = new Brand();
+
+         return this.brandMapper.queryBrandsByCid(cid);
+
+    }
 }

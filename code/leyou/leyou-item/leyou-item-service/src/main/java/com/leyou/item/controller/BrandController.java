@@ -24,19 +24,40 @@ public class BrandController {
                                                               @RequestParam(value = "rows", defaultValue = "5") Integer rows,
                                                               @RequestParam(value = "sortBy", required = false) String sortBy,
                                                               @RequestParam(value = "desc", defaultValue = "false") Boolean desc,
-                                                              @RequestParam(value = "key", required = false) String key){
+                                                              @RequestParam(value = "key", required = false) String key) {
 //        BrandQueryByPageParameter brandQueryByPageParameter=new BrandQueryByPageParameter(page,rows,sortBy,desc,key);
-        PageResult<Brand> result = this.brandService.queryBrandByPage(key,page,rows,sortBy,desc);
-        if(CollectionUtils.isEmpty(result.getItems())){
+        PageResult<Brand> result = this.brandService.queryBrandByPage(key, page, rows, sortBy, desc);
+        if (CollectionUtils.isEmpty(result.getItems())) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * Save brand response entity.
+     *
+     * @param brand the brand
+     * @param cids  the cids
+     * @return the response entity
+     */
     @PostMapping
     public ResponseEntity<Void> saveBrand(Brand brand, @RequestParam List<Long> cids) {
-
         this.brandService.saveBrand(brand, cids);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    /**
+     * Query brand by cid response entity.
+     * 根据分类id查询品牌列表
+     * @param cid the cid
+     * @return the response entity
+     */
+    @GetMapping("cid/{cid}")
+    public ResponseEntity<List<Brand>> queryBrandByCid(@PathVariable("cid") Long cid) {
+        List<Brand> brands = this.brandService.queryBrandsByCid(cid);
+        if (CollectionUtils.isEmpty(brands)) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(brands);
     }
 }
