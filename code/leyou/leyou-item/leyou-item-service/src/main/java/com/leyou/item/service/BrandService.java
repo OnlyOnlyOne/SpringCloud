@@ -53,8 +53,6 @@ public class BrandService {
         PageInfo<Brand> pageInfo = new PageInfo<>(brands);
         //包装成结果集返回
         return new PageResult<>(pageInfo.getTotal(), pageInfo.getList());
-
-
     }
 
     @Transactional
