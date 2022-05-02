@@ -74,4 +74,9 @@ public class BrandService {
          return this.brandMapper.queryBrandsByCid(cid);
 
     }
+
+
+    public Brand queryBrandById(Long id) {
+        return this.brandMapper.selectByPrimaryKey(id);
+    }
 }

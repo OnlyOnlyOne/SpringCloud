@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+
 @RequestMapping("brand")
+@RestController
 public class BrandController {
 
     @Autowired
@@ -59,5 +60,15 @@ public class BrandController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(brands);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<Brand> queryBrandById(@PathVariable("id") Long id) {
+        Brand brands = this.brandService.queryBrandById(id);
+        if (brands == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(brands);
+
     }
 }

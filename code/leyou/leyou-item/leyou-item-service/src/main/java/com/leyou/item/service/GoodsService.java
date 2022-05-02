@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.leyou.common.pojo.PageResult;
 import com.leyou.item.bo.SpuBo;
 import com.leyou.item.mapper.*;
+import com.leyou.item.pojo.Sku;
 import com.leyou.item.pojo.Spu;
 import com.leyou.item.pojo.SpuDetail;
 import com.leyou.item.pojo.Stock;
@@ -114,5 +115,23 @@ public class GoodsService {
             this.stockMapper.insertSelective(stock);
         });
 
+    }
+
+    public List<Sku> querySkuBySpuId(Long id) {
+        Example example = new Example(Sku.class);
+        example.createCriteria().andEqualTo("spuId",id);
+        List<Sku> skuList = this.skuMapper.selectByExample(example);
+        for (Sku sku : skuList){
+            Example temp = new Example(Stock.class);
+            temp.createCriteria().andEqualTo("skuId", sku.getId());
+            Stock stock = this.stockMapper.selectByExample(temp).get(0);
+            sku.setStock(stock.getStock());
+        }
+        return skuList;
+    }
+
+    public SpuDetail querySpuDetailById(Long spuId) {
+        SpuDetail spuDetail = spuDetailMapper.selectByPrimaryKey(spuId);
+        return spuDetail;
     }
 }
