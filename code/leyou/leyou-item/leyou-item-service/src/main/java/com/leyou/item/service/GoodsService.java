@@ -134,4 +134,8 @@ public class GoodsService {
         SpuDetail spuDetail = spuDetailMapper.selectByPrimaryKey(spuId);
         return spuDetail;
     }
+
+    public Spu querySpuById(Long id) {
+        return this.spuMapper.selectByPrimaryKey(id);
+    }
 }

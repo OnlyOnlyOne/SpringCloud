@@ -9,6 +9,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/leyou-goods-web/pom.xml" />
         <option value="$PROJECT_DIR$/leyou-item-interface/pom.xml" />
         <option value="$PROJECT_DIR$/leyou-item-service/pom.xml" />
       </set>

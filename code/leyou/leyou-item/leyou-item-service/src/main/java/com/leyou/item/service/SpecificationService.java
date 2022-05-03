@@ -39,4 +39,14 @@ public class SpecificationService {
         record.setSearching(searching);
         return this.paramMapper.select(record);
     }
+
+    public List<SpecGroup> queryGroupWithParam(Long cid) {
+        // 查询规格组
+        List<SpecGroup> groups = this.querySpecGroupByCid(cid);
+        groups.forEach(g -> {
+            // 查询组内参数
+            g.setParams(this.queryParams(g.getId(), null, null, null));
+        });
+        return groups;
+    }
 }
