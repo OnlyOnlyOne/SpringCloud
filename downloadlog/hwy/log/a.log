@@ -1,0 +1,5 @@
+[http-nio-80-exec-1] 2021-11-23 15:26:28,962 INFO c.i.r.i.AccessHistoryInterceptor - 0:0:0:0:0:0:0:1|http://localhost/client.html|Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36
+[http-nio-80-exec-3] 2021-11-23 15:26:29,007 INFO c.i.r.i.AccessHistoryInterceptor - 0:0:0:0:0:0:0:1|http://localhost/favicon.ico|Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36
+[http-nio-80-exec-4] 2021-11-23 15:26:30,663 INFO c.i.r.i.AccessHistoryInterceptor - 0:0:0:0:0:0:0:1|http://localhost/restful/persons|Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36
+[http-nio-80-exec-7] 2021-11-23 19:28:14,494 INFO c.i.r.i.AccessHistoryInterceptor - 0:0:0:0:0:0:0:1|http://localhost/restful/persons|Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.54 Safari/537.36
+
