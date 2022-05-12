@@ -1,4 +1,4 @@
-package com.hwy.downloadlog.config;
+package com.dowsure.downloadlog.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

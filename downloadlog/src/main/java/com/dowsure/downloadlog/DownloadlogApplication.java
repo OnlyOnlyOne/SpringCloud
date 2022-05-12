@@ -1,4 +1,4 @@
-package com.hwy.downloadlog;
+package com.dowsure.downloadlog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

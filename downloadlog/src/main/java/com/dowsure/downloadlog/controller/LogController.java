@@ -1,52 +1,63 @@
-package com.hwy.downloadlog.controller;
+package com.dowsure.downloadlog.controller;
 
+import com.dowsure.downloadlog.common.ApiRestResponse;
+import com.dowsure.downloadlog.filter.WebLogAspect;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
 import net.lingala.zip4j.util.Zip4jConstants;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @RestController
 public class LogController {
 
+    private final Logger log = LoggerFactory.getLogger(WebLogAspect.class);
+
     @GetMapping("/downloadlog/getlog")
-    public ResponseEntity<Void> getLog(@RequestParam String p,HttpServletResponse response) {
-        //获得文件夹路径
-        int index = p.lastIndexOf("/");
-        String srcDir = p.substring(0, index);
-        System.out.println("srcDir:" + srcDir);
-        //获得文件后缀前名字
-        int index2 = p.lastIndexOf(".");
-        String fileName = p.substring(index + 1, index2);
-        System.out.println("fileName:" + fileName);
+    public ApiRestResponse getLog(@RequestParam String p, HttpServletResponse response) {
 
-        // 要打包的文件夹
-        File currentFile = new File(srcDir);
-        File[] fs = currentFile.listFiles();
-        //存在的文件结果集
-        List<File> resultList = new ArrayList<>();
-
-        // 遍历文件夹下所有的文件、文件夹
-        for (File f : fs) {
-            if (f.isFile() && f.getName().equals(p.substring(index + 1))) {
-                resultList.add(f);
-            }
+        //判断后缀是否为log
+        String compare = p.substring(p.length() - 4);
+        System.out.println(compare);
+        if(!compare.equals(".log")){
+            log.info("fail : " + "下载"+ p +"失败");
+            return ApiRestResponse.error(10013,"参数错误");
         }
 
-        if (!resultList.isEmpty()) {
+
+        //获得文件夹路径,
+        int index = p.lastIndexOf(File.separator);
+        String srcDir = p.substring(0, index);
+//        System.out.println("srcDir:" + srcDir);
+        //获得文件后缀前名字
+        String fileName = p.substring(index + 1);
+        System.out.println("fileName:" + fileName);
+
+
+        File srcfile = new File(p);
+        if (srcfile.exists()) {
             //设置response的header
             response.setContentType("application/zip");
-            response.setHeader("Content-Disposition", "attachment;filename=" + fileName + ".zip");
+//            long timeNew = System.currentTimeMillis() / 1000; // 10位数的时间戳
+            Date date = new Date();
+            //生成时间戳
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
+            String timeNew = simpleDateFormat.format(date);
+            System.out.println(timeNew);
+            response.setHeader("Content-Disposition", "attachment;filename=" + timeNew + fileName + ".zip");
 
             // 生成的压缩文件
             File file = new File(srcDir + ".zip");
@@ -62,13 +73,11 @@ public class LogController {
             // 压缩级别
             parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_FASTEST);
             //遍历判断
-            for (File f : resultList) {
                 try {
-                    zipFile.addFile(f, parameters);
+                    zipFile.addFile(srcfile, parameters);
                 } catch (ZipException e) {
                     e.printStackTrace();
                 }
-            }
 
             InputStream fis = null;
             try {
@@ -88,9 +97,12 @@ public class LogController {
                 }
                 file.delete();
             }
-            return ResponseEntity.ok().build();
+            log.info("success : " + "下载"+ p +"成功");
+            return ApiRestResponse.success();
+
         }
-        return ResponseEntity.notFound().build();
+        log.info("fail : " + "下载"+ p +"失败");
+        return ApiRestResponse.error(10013,"参数错误");
     }
 }
 
